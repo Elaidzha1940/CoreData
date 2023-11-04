@@ -26,12 +26,14 @@ struct ContentView: View {
                 }
                 .onDelete(perform: deleteItems)
             }
-            //.listStyle()
+            .font(.system(size: 16, weight: .semibold))
             .navigationTitle("Vegies")
             .navigationBarItems(
                 trailing:
                     Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
+                        Image(systemName: "plus")
+                            .foregroundColor(.black)
+                            .font(.system(size: 20, weight: .bold))
                     }
             )
         }
