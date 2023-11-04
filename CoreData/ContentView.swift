@@ -1,21 +1,23 @@
+//  /*
 //
-//  ContentView.swift
-//  CoreData
+//  Project: CoreData
+//  File: ContentView.swift
+//  Created by: Elaidzha Shchukin
+//  Date: 03.11.2023
 //
-//  Created by Elaidzha Shchukin on 03.11.2023.
-//
+//  */
 
-import SwiftUI
+import SwiftUI 
 import CoreData
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
-
+    
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
         animation: .default)
     private var items: FetchedResults<Item>
-
+    
     var body: some View {
         NavigationView {
             List {
@@ -41,12 +43,12 @@ struct ContentView: View {
             Text("Select an item")
         }
     }
-
+    
     private func addItem() {
         withAnimation {
             let newItem = Item(context: viewContext)
             newItem.timestamp = Date()
-
+            
             do {
                 try viewContext.save()
             } catch {
@@ -57,11 +59,11 @@ struct ContentView: View {
             }
         }
     }
-
+    
     private func deleteItems(offsets: IndexSet) {
         withAnimation {
             offsets.map { items[$0] }.forEach(viewContext.delete)
-
+            
             do {
                 try viewContext.save()
             } catch {

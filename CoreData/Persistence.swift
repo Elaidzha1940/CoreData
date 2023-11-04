@@ -1,15 +1,17 @@
+//  /*
 //
-//  Persistence.swift
-//  CoreData
+//  Project: CoreData
+//  File: Persistence.swift
+//  Created by: Elaidzha Shchukin
+//  Date: 03.11.2023
 //
-//  Created by Elaidzha Shchukin on 03.11.2023.
-//
+//  */
 
 import CoreData
 
 struct PersistenceController {
     static let shared = PersistenceController()
-
+    
     static var preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
@@ -27,9 +29,9 @@ struct PersistenceController {
         }
         return result
     }()
-
+    
     let container: NSPersistentContainer
-
+    
     init(inMemory: Bool = false) {
         container = NSPersistentContainer(name: "CoreData")
         if inMemory {
@@ -39,7 +41,7 @@ struct PersistenceController {
             if let error = error as NSError? {
                 // Replace this implementation with code to handle the error appropriately.
                 // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-
+                
                 /*
                  Typical reasons for an error here include:
                  * The parent directory does not exist, cannot be created, or disallows writing.
