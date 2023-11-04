@@ -12,14 +12,10 @@ import CoreData
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
-    
-    //    @FetchRequest(
-    //        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
-    //        animation: .default)
-    //    private var items: FetchedResults<Item>
-    
-    @FetchRequest(entity: VegieEntity.entity(),
-                  sortDescriptors: [])
+
+    @FetchRequest(
+        entity: VegieEntity.entity(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \VegieEntity.name, ascending: true)])
     var vegies: FetchedResults<VegieEntity>
     
     var body: some View {
@@ -30,6 +26,7 @@ struct ContentView: View {
                 }
                 .onDelete(perform: deleteItems)
             }
+            //.listStyle()
             .navigationTitle("Vegies")
             .navigationBarItems(
                 trailing:
@@ -38,7 +35,6 @@ struct ContentView: View {
                     }
             )
         }
-        .listStyle(PlainListStyle())
     }
     
     private func addItem() {
