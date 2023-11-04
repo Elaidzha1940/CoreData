@@ -13,21 +13,26 @@ import CoreData
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
-        animation: .default)
-    private var items: FetchedResults<Item>
+//    @FetchRequest(
+//        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
+//        animation: .default)
+//    private var items: FetchedResults<Item>
+    
+    @FetchRequest(entity: VegieEntity.entity(), []) var vegies: FetchedResults<VegieEntity>
     
     var body: some View {
         NavigationView {
             List {
-                ForEach(items) { item in
+                ForEach(vegies) { vegie in
                     NavigationLink {
-                        Text("Item at \(item.timestamp!, formatter: itemFormatter)")
+                        Text(vegie.name ?? "")
+                        //Text("Item at \(item.timestamp!, formatter: itemFormatter)")
                     } label: {
                         Text(item.timestamp!, formatter: itemFormatter)
                     }
                 }
+                .listStyle(PlainListStyle)
+                .navigationTitle("Vegies")
                 .onDelete(perform: deleteItems)
             }
             .toolbar {
@@ -46,8 +51,9 @@ struct ContentView: View {
     
     private func addItem() {
         withAnimation {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
+            let newVegie = VegieEntity(context: viewContext)
+//            let newItem = Item(context: viewContext)
+//            newItem.timestamp = Date()
             
             do {
                 try viewContext.save()
