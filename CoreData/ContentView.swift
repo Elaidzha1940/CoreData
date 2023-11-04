@@ -1,6 +1,6 @@
 //  /*
 //
-//  Project: CoreData
+//  Project: NewCoreData
 //  File: ContentView.swift
 //  Created by: Elaidzha Shchukin
 //  Date: 03.11.2023
@@ -18,7 +18,7 @@ struct ContentView: View {
 //        animation: .default)
 //    private var items: FetchedResults<Item>
     
-    @FetchRequest(entity: VegieEntity.entity(), []) var vegies: FetchedResults<VegieEntity>
+    @FetchRequest(entity: VegieEntity.entity(), sortDescriptors: []) var vegies: FetchedResults<VegieEntity>
     
     var body: some View {
         NavigationView {
@@ -28,12 +28,12 @@ struct ContentView: View {
                         Text(vegie.name ?? "")
                         //Text("Item at \(item.timestamp!, formatter: itemFormatter)")
                     } label: {
-                        Text(item.timestamp!, formatter: itemFormatter)
+                        //Text(item.timestamp!, formatter: itemFormatter)
                     }
                 }
-                .listStyle(PlainListStyle)
+                //.listStyle(PlainListStyle)
                 .navigationTitle("Vegies")
-                .onDelete(perform: deleteItems)
+                //.onDelete(perform: deleteItems)
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -90,8 +90,6 @@ private let itemFormatter: DateFormatter = {
     return formatter
 }()
 
-#if DEBUG
 #Preview {
     ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
 }
-#endif

@@ -1,14 +1,13 @@
 //  /*
 //
-//  Project: CoreData
+//  Project: NewCoreData
 //  File: Persistence.swift
 //  Created by: Elaidzha Shchukin
 //  Date: 03.11.2023
 //
 //  */
 
-import SwiftUI
-//import CoreData
+import CoreData
 
 struct PersistenceController {
     static let shared = PersistenceController()
