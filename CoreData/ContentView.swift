@@ -26,28 +26,17 @@ struct ContentView: View {
         NavigationView {
             List {
                 ForEach(vegies) { vegie in
-                    NavigationLink {
-                        Text(vegie.name ?? "")
-                        //Text("Item at \(item.timestamp!, formatter: itemFormatter)")
-                    } label: {
-                        //Text(item.timestamp!, formatter: itemFormatter)
-                    }
+                    Text(vegie.name ?? "")
                 }
                 .onDelete(perform: deleteItems)
             }
             .navigationTitle("Vegies")
-            
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
+            .navigationBarItems(
+                trailing:
                     Button(action: addItem) {
                         Label("Add Item", systemImage: "plus")
                     }
-                }
-            }
-            Text("Select an item")
+            )
         }
         .listStyle(PlainListStyle())
     }
@@ -65,7 +54,6 @@ struct ContentView: View {
             guard let index = offsets.first else { return }
             let vegieEntity = vegies[index]
             viewContext.delete(vegieEntity)
-            // offsets.map { items[$0] }.forEach(viewContext.delete)
             saveItems()
         }
     }
