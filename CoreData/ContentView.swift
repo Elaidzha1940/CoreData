@@ -52,6 +52,7 @@ struct ContentView: View {
     private func addItem() {
         withAnimation {
             let newVegie = VegieEntity(context: viewContext)
+            newVegie.name = "Potato"
 //            let newItem = Item(context: viewContext)
 //            newItem.timestamp = Date()
             
@@ -89,6 +90,8 @@ private let itemFormatter: DateFormatter = {
     return formatter
 }()
 
+#if DEBUG
 #Preview {
     ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
 }
+#endif
