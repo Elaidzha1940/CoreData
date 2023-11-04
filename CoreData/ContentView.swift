@@ -18,15 +18,22 @@ struct ContentView: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \VegieEntity.name, ascending: true)])
     var vegies: FetchedResults<VegieEntity>
     
+    @State var textField: String = ""
+    
     var body: some View {
         NavigationView {
-            List {
-                ForEach(vegies) { vegie in
-                    Text(vegie.name ?? "")
+            VStack(spacing: 20) {
+                
+                TextField("Add vegie here...", text: $textField)
+                
+                List {
+                    ForEach(vegies) { vegie in
+                        Text(vegie.name ?? "")
+                    }
+                    .onDelete(perform: deleteItems)
                 }
-                .onDelete(perform: deleteItems)
+                .font(.system(size: 16, weight: .semibold))
             }
-            .font(.system(size: 16, weight: .semibold))
             .navigationTitle("Vegies")
             .navigationBarItems(
                 trailing:
