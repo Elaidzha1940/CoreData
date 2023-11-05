@@ -12,7 +12,7 @@ import CoreData
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
-
+    
     @FetchRequest(
         entity: VegieEntity.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \VegieEntity.name, ascending: true)])
@@ -22,34 +22,62 @@ struct ContentView: View {
     
     var body: some View {
         NavigationView {
-            VStack(spacing: 20) {
+            VStack(spacing: -5) {
                 
-                TextField("Add vegie here...", text: $textField)
+                TextField("Add veggie here...", text: $textField)
+                    .font(.system(size: 18, weight: .semibold, design: .rounded))
+                    .foregroundColor(.white)
+                    .padding(.leading)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 55)
+                    .background(Color.gray.opacity(0.3))
+                    .cornerRadius(15)
+                    .padding(.horizontal)
+                
+                Button(action: {
+                    addItem()
+                }, label: {
+                    Text("Submit")
+                        .font(.system(size: 20, weight: .semibold, design: .rounded))
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 55)
+                        .background(Color.mint.opacity(0.5))
+                        .cornerRadius(15)
+                })
+                .padding()
                 
                 List {
                     ForEach(vegies) { vegie in
                         Text(vegie.name ?? "")
+                            .onTapGesture {
+                                updateItem(vegie: vegie)
+                            }
                     }
                     .onDelete(perform: deleteItems)
+                    .listRowBackground(Color.gray.opacity(0.3))
                 }
                 .font(.system(size: 16, weight: .semibold))
             }
             .navigationTitle("Vegies")
-            .navigationBarItems(
-                trailing:
-                    Button(action: addItem) {
-                        Image(systemName: "plus")
-                            .foregroundColor(.black)
-                            .font(.system(size: 20, weight: .bold))
-                    }
-            )
         }
     }
     
     private func addItem() {
         withAnimation {
             let newVegie = VegieEntity(context: viewContext)
-            newVegie.name = "Potato"
+            newVegie.name = textField
+            saveItems()
+            textField = ""
+        }
+    }
+    
+    private func updateItem(vegie: VegieEntity) {
+        withAnimation {
+            let currentName = vegie.name ?? ""
+            let newName = currentName + "!"
+            vegie.name = newName
+            
             saveItems()
         }
     }
